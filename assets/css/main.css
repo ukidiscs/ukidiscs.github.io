@@ -3703,10 +3703,10 @@ input, select, textarea {
 			}
 
 				#nav ul.links li a {
-					-moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-					-webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-					-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-					transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+					-moz-transition: background-color 0.2s ease-in-out, color 0s ease-in-out;
+					-webkit-transition: background-color 0.2s ease-in-out, color 0s ease-in-out;
+					-ms-transition: background-color 0.2s ease-in-out, color 0s ease-in-out;
+					transition: background-color 0.2s ease-in-out, color 0s ease-in-out;
 					display: block;
 					font-size: 0.8rem;
 					outline: none;
