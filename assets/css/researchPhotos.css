@@ -1,0 +1,122 @@
+/* ===============================
+   TIMELINE CONTAINER
+================================= */
+.photo-timeline {
+  display: flex;
+  flex-wrap: wrap;                 /* allow wrapping for any number of items */
+  justify-content: center;          /* center rows */
+  align-items: flex-start;          /* top-align multi-row items */
+  gap: 6em 2.5em;                  /* vertical (row) / horizontal (column) gaps */
+  position: relative;
+  padding: 5em 5%;                  /* top/bottom padding */
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+/* Horizontal connecting line (desktop) */
+.photo-timeline::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  right: 5%;
+  height: 0.1875em;                 /* 3px → em */
+  z-index: 0;
+}
+
+/* ===============================
+   PHOTO ITEMS
+================================= */
+.photo-item {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+
+  flex: 1 1 100em;                  /* grow/shrink, flexible basis */
+  max-width: 8em;                 /* prevent overflowing too much */
+  min-width: 7em;                  /* shrink on very small screens */
+  box-sizing: border-box;
+}
+
+.photo {
+  width: 9em;
+  height: 9em;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  box-shadow: 0 0.75em 1.875em rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+.photo:hover {
+  transform: translateY(-0.5em);
+  box-shadow: 0 1.25em 2.8125em rgba(0,0,0,0.25);
+}
+
+/* Label above photo */
+.label {
+  position: absolute;
+  bottom: 100%;
+  margin-bottom: 0.75em;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: rgba(0,0,0,0.85);
+  color: white;
+  padding: 0.5em 0.875em;
+  border-radius: 1.125em;
+
+  font-size: 0.85rem;
+  width: 10em;
+  max-width: 15em;
+  height: 4em;                        /* exactly 2 lines */
+
+  display: flex;
+  align-items: center;                 /* vertical center */
+  justify-content: center;             /* horizontal center */
+  text-align: center;
+
+  line-height: 1.5;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+/* ===============================
+   MOBILE VERSION
+================================= */
+@media (max-width: 500px) {         /* 500px */
+  .photo-timeline {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 3.75em 1.25em;
+    gap: 2.5em 0;
+  }
+
+  .photo-timeline::before {
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    right: auto;
+    width: 0.1875em;
+    height: auto;
+    transform: translateX(-50%);
+  }
+
+  .photo-item {
+    margin: 3.75em 0;
+    flex: none;
+    max-width: 15em;
+  }
+
+  .photo {
+    width: 15em;
+    height: 15em;
+  }
+
+  .label {
+    font-size: 1.3rem;
+  }
+}

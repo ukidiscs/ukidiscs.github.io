@@ -1,132 +1,258 @@
-<!DOCTYPE html>
-<html lang="en-us">
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <meta itemprop="name" content="The UK and Ireland&#x27;s Discs Community Webpage" />
-  <meta itemprop="description" content="" />
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>UKI Discs</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/researchPhotos.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<link rel="stylesheet" href="map/leaflet.css" />
+		<script src="map/leaflet.js"></script>
+		<link rel="apple-touch-icon" sizes="180x180" href="https://ukidiscs.github.io/apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="https://ukidiscs.github.io/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="https://ukidiscs.github.io/favicon-16x16.png" />
+		<link rel="shortcut icon" href="https://ukidiscs.github.io/favicon.ico" />
 
-  <link rel="apple-touch-icon" sizes="180x180" href="https://ukidiscs.github.io/apple-touch-icon.png"/>
-  <link rel="icon" type="image/png" sizes="32x32" href="https://ukidiscs.github.io/favicon-32x32.png" />
-  <link
-    rel="icon"
-    type="image/png"
-    sizes="16x16"
-    href="https://ukidiscs.github.io/favicon-16x16.png"
-  />
-  <link
-    rel="shortcut icon"
-    href="https://ukidiscs.github.io/favicon.ico"
-  />
-  <link rel="stylesheet" href="https://ukidiscs.github.io/style.css"/>
-  
-  <title>The UK and Ireland&#x27;s Discs Community Webpage</title>
-  
+		<style>
+		#ukimap {
+			width: 100%;
+			height: 450px;
+			min-height: 400px;
+			border-radius: 8px;
+		}
 
-  
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://ukidiscs.github.io/rss.xml">
-  
+		.leaflet-container {
+			background: white;
+		}
 
-  <body id="page">
+		.uni-highlight {
+			color: #186eef !important;
+		}
+		</style>
+	</head>
 
-	
-	
-	
-	
-	<div id="spotlight" class="animated fadeIn">
-	  <div id="home-center">
-		<h1 id="home-title">The UK and Ireland&#x27;s Discs Community Webpage</h1>
-		<p id="home-subtitle">The UKI discs community aims to bring together the different disc communities across the UK &amp; Ireland for those working on astrophysical discs on various scales, from circumplanetary to galactic discs. The initiative started at the University of Warwick in 2023. If you are interested in building this community with us, please do sign up to our mailing list following the link below.</p>
-		<div id="home-social">
-		  
+	<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const sections = document.querySelectorAll('article.post'); // all sections
+		const navLinks = document.querySelectorAll('#nav ul.links li a');
 
-<a href="https:&#x2F;&#x2F;twitter.com" target="_blank" rel="noopener me"
-   title="twitter">
-  
-  <svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
-  
-</a>
+		function clearActive() {
+			navLinks.forEach(link => link.parentElement.classList.remove('active'));
+		}
 
-<a href="https:&#x2F;&#x2F;github.com" target="_blank" rel="noopener me"
-   title="github">
-  
-  <svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-  
-</a>
+		function setActive() {
+			const scrollPos = window.scrollY - 0.5*window.innerHeight; // bottom of viewport
 
-<a href="mailto:name@domain.com" target="_blank" rel="noopener me"
-   title="email">
-  
-  <svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-  
-</a>
+			sections.forEach(section => {
+				const top = section.offsetTop;
 
+				// Activate when scroll passes the section top minus viewport height
+				if (scrollPos >= top) {
+					const id = section.getAttribute('id');
+					clearActive();
+					const link = document.querySelector(`#nav ul.links li a[href="#${id}"]`);
+					if (link) link.parentElement.classList.add('active');
+				}
+			});
+		}
 
-		</div>
-		
-		
-		<nav id="home-nav" class="site-nav">
-		  
-		  <a href="https://ukidiscs.github.io/https://warwick.ac.uk/fac/sci/physics/research/astro/research/discs/uki-discs">Mailing List</a>
-		  
-		  <a href="https://ukidiscs.github.io/https://ukidiscs.github.io/discs2024">UK &amp; Ireland Discs Meeting 2024</a>
-		  
-		</nav>
-		
-	  </div>
-	  
-	  
-	  <div id="home-footer">
-		<p>&copy; 2024
-      <a href="https:&#x2F;&#x2F;ukidiscs.github.io&#x2F;"></a>
-      
-		  &#183; <a href="https://ukidiscs.github.io/rss.xml" target="_blank" title="rss">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg>
-		  </a>
-      
-		</p>
-	  </div>
-	  
-	</div>
-	
-	<script src="https://ukidiscs.github.io/js/main.js"></script>
+		window.addEventListener('scroll', setActive);
+		window.addEventListener('resize', setActive);
 
-	<!-- Math rendering -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}, {left: '\\[', right: '\\]', display: true}, {left: '\\(', right: '\\)', display: false}]});"></script>
+		setActive(); // run once on load
+	});
+	</script>
 
-    
-		<link href="https://unpkg.com/highlightjs-badge/highlightjs/styles/railscasts.css" rel="stylesheet">
-		<!-- https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.1/build/styles/  for min version -->
-		<script src="https://unpkg.com/highlightjs-badge/highlightjs/highlight.pack.js"></script>
-		<script src="https://unpkg.com/highlightjs-badge/highlightjs-badge.min.js"></script>
-		<script>
-			var pres = document.querySelectorAll("pre>code");
-			for (var i = 0; i < pres.length; i++) {
-				hljs.highlightBlock(pres[i]);
-			}
-		</script>
-		
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="fade-in">
+
+				<!-- Intro -->
+					<div id="intro">
+						<h1 style="font-variant-caps: small-caps">The UK and Ireland's Discs Community Webpage</h1>
+						<ul class="actions">
+							<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+						</ul>
+					</div>
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">UKI Discs</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="#about" class="scrolly">About</a></li>
+							<li><a href="#hosts" class="scrolly">Past & Future Meeting Hosts</a></li>
+							<li><a href="#research" class="scrolly">Research Topics</a></li>
+							<!-- <li><a href="elements.html">Elements Reference</a></li> -->
+						</ul>
+						<ul class="icons">
+							<li><a href="https://warwick.ac.uk/fac/sci/physics/research/astro/research/discs/uki-discs/" class="icon fa fa-envelope"><span class="label">Twitter</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Featured Post -->
+						<article class="post featured" id="about">
+							<header class="major">
+								<!-- <span class="date">April 25, 2017</span> -->
+								<h2>Who are we?</h2>
+								<p>The UKI discs community aims to bring together the different disc communities across the UK & Ireland for those working on astrophysical discs on various scales, from circumplanetary to galactic discs. The initiative started at the University of Warwick in 2023. If you are interested in building this community with us, please do sign up to our mailing list following the link below.</p>
+							</header>
+							<!-- <a href="#" class="image main"><img src="images/infall.png" alt="" /></a> -->
+							<ul class="actions special">
+								<li><a href="https://warwick.ac.uk/fac/sci/physics/research/astro/research/discs/uki-discs/" class="button large" id="mailingListButton">Mailing List</a></li>
+							</ul>
+							<script>
+								document.addEventListener('DOMContentLoaded', () => {
+									const nav = document.getElementById('nav');
+
+									// Get the nav's original Y-position relative to the document
+									const navTop = nav.offsetTop;
+
+									window.addEventListener('scroll', () => {
+										if (window.scrollY >= navTop) {
+											nav.classList.add('sticky');
+										} else {
+											nav.classList.remove('sticky');
+										}
+									});
+								});
+								</script>
+							<ul class="actions" style="align-items: center; justify-content: center; padding-top: 2em;">
+								<li><a href="#hosts" class="button icon solid solo fa-arrow-down scrolly" ></a></li>
+							</ul>
+						</article>
+
+						<article class="post featured" id="hosts">
+							<header class="major">
+								<!-- <span class="date">April 25, 2017</span> -->
+								<h2 style="margin-bottom: 1em; font-size: 3em;">Host Institutions</h2>
+								<div class="row">
+									
+									<div class="col-6 col-12-small" style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+										
+										<ul class="uni-list" style="text-align: left; list-style: none; margin: 0 auto; display: inline-block;">
+											<li>
+												<span style="float: left; min-width: 6ch;">2026</span>
+												<a data-name="University of Cambridge" href="https://ukidiscs2026.github.io/discs2026/">University of Cambridge</a>
+											</li>
+											<h4 style="margin: 1em; font-size: 1.5em;">Previous Years</h4>
+											<li>
+												<span style="float: left; min-width: 6ch;">2025</span>
+												<a data-name="University of Hertfordshire" href="https://ukidiscs.github.io/discs2025/">University of Hertfordshire</a>
+											</li>
+											<li>
+												<span style="float: left; min-width: 6ch;">2024</span>
+												<a data-name="University of Warwick" href="https://ukidiscs.github.io/discs2024/">University of Warwick</a>
+											</li>
+											
+										</ul>
+									</div>
+									<div class="col-6 col-12-small">
+										<div id="ukimap"></div>
+									</div>
+								</div>
+							</header>
+
+							<ul class="actions" style="align-items: center; justify-content: center; padding-top: 2em;">
+								<li><a href="#research" class="button icon solid solo fa-arrow-down scrolly" ></a></li>
+							</ul>
+						</article>
+
+						<article class="post featured"  id="research">
+						
+							<header class="major">
+									<!-- <span class="date">April 25, 2017</span> -->
+									<h2>Research Topics</h2>
+									<p>Our meetings include research on various topics on astrophysical discs which include (but not limited to) planet formation, debris discs, white dwarf disc, the impact of the environment, and warped discs.</p>
+								</header>
+
+							<div class="photo-timeline">
+
+								<div class="photo-item">
+									<div class="photo" style="background-image:url('images/planetFormation.jpeg')">
+									<span class="label">Planet Formation</span>
+									</div>
+								</div>
+
+								<div class="photo-item">
+									<div class="photo" style="background-image:url('images/debrisDisc.jpeg')">
+									<span class="label">Debris Discs</span>
+									</div>
+								</div>
+
+								<div class="photo-item">
+									<div class="photo" style="background-image:url('images/WhiteDwarfDisc.jpeg')">
+									<span class="label">White Dwarf Discs</span>
+									</div>
+								</div>
+
+								<div class="photo-item">
+									<div class="photo" style="background-image:url('images/Environment.jpeg')">
+									<span class="label">Impact of the Environment</span>
+									</div>
+								</div>
+
+								<div class="photo-item">
+									<div class="photo" style="background-image:url('images/Warp.png')">
+									<span class="label">Warped Discs</span>
+									</div>
+								</div>
+								
+
+							</div>
+							<ul class="actions" style="align-items: center; justify-content: center; padding-top: 2em;">
+								<li><a href="#header" class="button icon solid solo fa-arrow-up scrolly" ></a></li>
+							</ul>
+
+						</article>
+					</div>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; 2026</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script src="map/ukimap.js"></script>
+
 			<script>
-				var options = {
-					copyIconClass: "gg-clipboard",
-					checkIconClass: "gg-check"
-				};
-				window.highlightJsBadge(options);
+			// List of images in your folder
+				const images = [
+					"Backgrounds/debrisDisc/debrisDisc.001.jpeg",
+					"Backgrounds/planetFormation/planetFormation.001.jpeg",
+					"Backgrounds/WhiteDwarfDisc/WhiteDwarfDisc.001.jpeg",
+					// "Backgrounds/Environment/Environment.001.jpeg"
+				];
+
+				// Pick a random image
+				const randomImage = images[Math.floor(Math.random() * images.length)];
+
+				// Apply it to the background
+				const bgDiv = document.querySelector("#wrapper > .bg");
+				bgDiv.style.backgroundImage = `url('${randomImage}')`;
 			</script>
-		
 
-	
-
-	
-	<script src="https://ukidiscs.github.io/js/main.js"></script>
-
-    
-    
-
-	
-  </body>
+	</body>
 </html>
