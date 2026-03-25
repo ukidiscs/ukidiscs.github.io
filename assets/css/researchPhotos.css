@@ -36,6 +36,7 @@
   max-width: 8em;                 /* prevent overflowing too much */
   min-width: 7em;                  /* shrink on very small screens */
   box-sizing: border-box;
+  left: -0.5em;
 }
 
 .photo {
@@ -109,6 +110,7 @@
     margin: 3.75em 0;
     flex: none;
     max-width: 15em;
+    left: 0em
   }
 
   .photo {
