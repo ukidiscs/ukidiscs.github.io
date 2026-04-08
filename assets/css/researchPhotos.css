@@ -122,3 +122,53 @@
     font-size: 1.3rem;
   }
 }
+
+.image-credits {
+  font-family: system-ui, -apple-system, sans-serif;
+  display: grid;
+  justify-content: center;
+}
+
+.image-credits h3 {
+  text-align: center;
+  margin-bottom: 0.8em;
+  font-size: 2rem;
+}
+
+.image-credits ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 👇 Move grid here */
+.image-credits li {
+  display: grid;
+  grid-template-columns: 13em 1fr; /* fixed subject + flexible credit */
+  column-gap: 2em;
+  margin-bottom: 0.6em;
+}
+
+/* Left column */
+.subject {
+  font-weight: 600;
+  text-align: left;
+}
+
+/* Right column */
+.credit {
+  color: #555;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .image-credits li {
+    grid-template-columns: 1fr;
+    row-gap: 0.2em;
+    margin-bottom: 0.3em;
+  }
+
+  .subject {
+    text-align: left;
+  }
+}
