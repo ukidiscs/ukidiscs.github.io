@@ -43,6 +43,7 @@ fetch("map/uk_ireland_merged.geojson")
 // Names must be same data-name
 // -----------------------------
 const markersData = [
+    { coords: [53.343792, -6.254572], name: "Trinity College Dublin", url: "https://ukidiscs.github.io/discs2027/" },
     { coords: [52.2053, 0.1218], name: "University of Cambridge", url: "https://ukidiscs2026.github.io/discs2026/" },
     { coords: [51.7617, -0.2468], name: "University of Hertfordshire", url: "https://ukidiscs.github.io/discs2025/" },
     { coords: [52.3793, -1.5603], name: "University of Warwick", url: "https://ukidiscs.github.io/discs2024/" }
